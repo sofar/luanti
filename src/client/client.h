@@ -389,6 +389,12 @@ public:
 			std::vector<std::pair<std::string, std::string>> &&files,
 			std::vector<std::pair<std::string, std::string>> &&mods_to_load);
 
+	// Returns SSCSM files collected during media download and clears the list
+	std::vector<std::pair<std::string, std::string>> takeSSCSMPendingFiles()
+	{
+		return std::move(m_sscsm_pending_files);
+	}
+
 	// The following set of functions is used by ClientMediaDownloader
 	// Insert a media file appropriately into the appropriate manager
 	bool loadMedia(const std::string &data, const std::string &filename,
@@ -601,6 +607,8 @@ private:
 
 	// SSCSM
 	std::unique_ptr<SSCSMController> m_sscsm_controller;
+	// SSCSM files collected during media download (modname:filename -> content)
+	std::vector<std::pair<std::string, std::string>> m_sscsm_pending_files;
 
 	bool m_shutdown = false;
 
